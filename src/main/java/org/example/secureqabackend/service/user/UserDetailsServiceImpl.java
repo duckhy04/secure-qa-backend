@@ -2,7 +2,6 @@ package org.example.secureqabackend.service.user;
 
 import org.example.secureqabackend.entity.User;
 import org.example.secureqabackend.exception.ResourceNotFoundException;
-import org.example.secureqabackend.exception.RestApiExceptionHandler;
 import org.example.secureqabackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
