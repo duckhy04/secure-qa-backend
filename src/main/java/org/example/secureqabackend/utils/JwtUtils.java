@@ -23,11 +23,13 @@ public class JwtUtils {
     // Generator token
     public String generateToken(Authentication auth) {
         String username = auth.getName();
+        String roles = auth.getAuthorities().toString();
         Date now = new Date();
         Date expiration = new Date(now.getTime() + jwtExpiration);
 
         return Jwts.builder()
                 .subject(username)
+                .claim("roles", roles)
                 .issuedAt(now)
                 .expiration(expiration)
                 .signWith(key())
