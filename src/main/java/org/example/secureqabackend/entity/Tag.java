@@ -2,14 +2,7 @@ package org.example.secureqabackend.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.example.secureqabackend.dto.CategoryDTO;
-import org.example.secureqabackend.dto.QuestionDTO;
 import org.example.secureqabackend.dto.TagDTO;
-import org.example.secureqabackend.dto.UserDTO;
-
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 @Entity
 @Data

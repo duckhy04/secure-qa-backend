@@ -10,7 +10,6 @@ import org.example.secureqabackend.dto.UserDTO;
 import org.example.secureqabackend.enums.QuestionDifficulty;
 import org.example.secureqabackend.enums.QuestionStatus;
 
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
