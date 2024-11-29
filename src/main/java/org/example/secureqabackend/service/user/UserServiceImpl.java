@@ -1,8 +1,10 @@
 package org.example.secureqabackend.service.user;
 
 import jakarta.annotation.PostConstruct;
+import org.example.secureqabackend.dto.UserDTO;
 import org.example.secureqabackend.entity.Role;
 import org.example.secureqabackend.entity.User;
+import org.example.secureqabackend.exception.ResourceNotFoundException;
 import org.example.secureqabackend.repository.RoleRepository;
 import org.example.secureqabackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +51,18 @@ public class UserServiceImpl implements UserService {
             User adminUser = new User();
             adminUser.setEmail("admin@gmail.com");
             adminUser.setUsername("admin");
-            adminUser.setPassword(passwordEncoder.encode("admin"));
+            adminUser.setPassword(passwordEncoder.encode("Admin123"));
             adminUser.setRoles(roles);
 
             userRepository.save(adminUser);
         }
+    }
+
+    @Override
+    public UserDTO getUserByUsername(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new ResourceNotFoundException("User not found")
+        );
+        return user.userDTO();
     }
 }

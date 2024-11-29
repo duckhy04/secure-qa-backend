@@ -2,7 +2,6 @@ package org.example.secureqabackend.service.auth;
 
 import org.example.secureqabackend.dto.AuthRequest;
 import org.example.secureqabackend.dto.AuthResponse;
-import org.example.secureqabackend.dto.UserDto;
 import org.example.secureqabackend.entity.Role;
 import org.example.secureqabackend.entity.User;
 import org.example.secureqabackend.exception.AlreadyExistsException;
@@ -54,12 +53,8 @@ public class AuthServiceImpl implements AuthService {
                 () -> new ResourceNotFoundException("User not found")
         );
 
-        UserDto userDto = new UserDto();
-        userDto.setUsername(user.getUsername());
-
         AuthResponse authResponse = new AuthResponse();
         authResponse.setToken(token);
-        authResponse.setUser(userDto);
         return authResponse;
     }
 
