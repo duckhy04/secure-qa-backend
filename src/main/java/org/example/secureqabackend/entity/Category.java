@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.example.secureqabackend.dto.CategoryDTO;
 
-import java.util.Set;
-
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
