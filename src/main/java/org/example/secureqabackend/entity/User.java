@@ -3,7 +3,7 @@ package org.example.secureqabackend.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.example.secureqabackend.dto.UserDto;
+import org.example.secureqabackend.dto.UserDTO;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -45,9 +45,11 @@ public class User extends Time {
     @Lob
     private String expertiseAreas;
 
-    public UserDto userDto() {
-        UserDto userDto = new UserDto();
-        userDto.setUsername(username);
-        return userDto;
+    public UserDTO userDTO() {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(id);
+        userDTO.setUsername(username);
+        userDTO.setExpertiseAreas(expertiseAreas);
+        return userDTO;
     }
 }
