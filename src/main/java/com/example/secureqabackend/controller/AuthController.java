@@ -33,27 +33,31 @@ public class AuthController {
         } catch (BadCredentialsException e) {
             return buildErrorResponse("Invalid username or password. Please try again.", HttpStatus.UNAUTHORIZED);
         } catch (AuthenticationException e) {
-            return buildErrorResponse("Authentication failed. Please check your credentials.", HttpStatus.UNAUTHORIZED);
+            return buildErrorResponse("Authentication failed. Please check your credentials.", HttpStatus.FORBIDDEN);
         } catch (Exception e) {
-            return buildErrorResponse("An error occurred during login. Please try again later.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return buildErrorResponse("An internal error occurred during login. Please try again later.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-
-    private ResponseEntity<ApiResponse<AuthResponse>> buildErrorResponse(String message, HttpStatus status) {
-        ApiResponse<AuthResponse> apiResponse = new ApiResponse<>(
-                message,
-                "error",
-                null,
-                LocalDateTime.now()
-        );
-        return ResponseEntity.status(status).body(apiResponse);
     }
 
     @PostMapping("/sign-up")
     public ResponseEntity<ApiResponse<String>> signUp(@RequestBody AuthRequest authRequest) {
-        ApiResponse<String> apiResponse = authService.signUp(authRequest);
-        return ResponseEntity
-                .status(apiResponse.getStatus().equals("success") ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
-                .body(apiResponse);
+        try {
+            ApiResponse<String> apiResponse = authService.signUp(authRequest);
+            return ResponseEntity
+                    .status(apiResponse.getStatus() == ApiResponse.Status.SUCCESS ? HttpStatus.CREATED : HttpStatus.CONFLICT)
+                    .body(apiResponse);
+        } catch (Exception e) {
+            return buildErrorResponse("An internal error occurred during sign-up. Please try again later.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private <T> ResponseEntity<ApiResponse<T>> buildErrorResponse(String message, HttpStatus status) {
+        ApiResponse<T> apiResponse = new ApiResponse<>(
+                message,
+                ApiResponse.Status.ERROR,
+                null,
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(status).body(apiResponse);
     }
 }

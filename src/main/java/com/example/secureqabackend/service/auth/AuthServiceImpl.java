@@ -47,31 +47,14 @@ public class AuthServiceImpl implements AuthService {
 
             return new ApiResponse<>(
                     "Login successful. Welcome back!",
-                    "success",
+                    ApiResponse.Status.SUCCESS,
                     authResponse,
                     LocalDateTime.now()
             );
         } catch (BadCredentialsException e) {
-            return new ApiResponse<>(
-                    "Invalid username or password. Please try again.",
-                    "error",
-                    null,
-                    LocalDateTime.now()
-            );
+            throw new BadCredentialsException("Invalid username or password.");
         } catch (AuthenticationException e) {
-            return new ApiResponse<>(
-                    "Authentication failed. Please check your credentials.",
-                    "error",
-                    null,
-                    LocalDateTime.now()
-            );
-        } catch (Exception e) {
-            return new ApiResponse<>(
-                    "An error occurred during login. Please try again later.",
-                    "error",
-                    null,
-                    LocalDateTime.now()
-            );
+            throw new AuthenticationException("Authentication failed.") {};
         }
     }
 
@@ -80,7 +63,7 @@ public class AuthServiceImpl implements AuthService {
         if (userRepository.existsByUsername(authRequest.getUsername())) {
             return new ApiResponse<>(
                     "Username already exists",
-                    "failed",
+                    ApiResponse.Status.ERROR,
                     null,
                     LocalDateTime.now()
             );
@@ -89,7 +72,7 @@ public class AuthServiceImpl implements AuthService {
         if (userRepository.existsByEmail(authRequest.getEmail())) {
             return new ApiResponse<>(
                     "Email already exists",
-                    "failed",
+                    ApiResponse.Status.ERROR,
                     null,
                     LocalDateTime.now()
             );
@@ -103,7 +86,7 @@ public class AuthServiceImpl implements AuthService {
 
         return new ApiResponse<>(
                 "Sign up successfully",
-                "success",
+                ApiResponse.Status.SUCCESS,
                 null,
                 LocalDateTime.now()
         );

@@ -11,7 +11,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ApiResponse<T> {
     private String message;
-    private String status;
+    private Status status;
     private T data;
     private LocalDateTime timestamp;
+
+    public enum Status {
+        SUCCESS, ERROR
+    }
 }
